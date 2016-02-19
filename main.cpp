@@ -39,13 +39,14 @@ DoOutput(Result r)
 }
 
 // CHANGE This Code (you can add more functions)-----------------------------------------------------------------------------
-Result SearchFromCentre(std::string &param){
+std::string SearchFromCentre(std::string &param){
     std::string str = "";
     std::stringstream ss(param);
     std::string line;
     int bestLen = 0;
     int bestStart = 0;
     int lineNumber = 0;
+    std::string bestString = "";
     for (int lines = 0; std::getline(ss, line, '\n'); lines++)
     {
         for(int centre= 0 ; centre < line.length(); centre++)
@@ -66,6 +67,7 @@ Result SearchFromCentre(std::string &param){
                     bestStart = i;
                     bestLen = j-i;
                     stillPal = false;
+                    bestString = line.substr(i, (bestLen-i));
                 }
                 else stillPal = false;
             }
@@ -77,6 +79,7 @@ Result SearchFromCentre(std::string &param){
                     lineNumber = lines;
                     bestStart = (i > 0) ? i : 0;
                     bestLen = (j < line.length()) ? j - i : line.length() - i;
+                    bestString = line.substr(i, (bestLen-i));
                     stillPal = false;
                 }
             }
@@ -96,6 +99,7 @@ Result SearchFromCentre(std::string &param){
                             bestStart = i;
                             bestLen = j - i;
                             stillPal = false;
+                            bestString = line.substr(i, (bestLen-i));
                         }
                         else stillPal = false;
 
@@ -108,18 +112,20 @@ Result SearchFromCentre(std::string &param){
                             bestStart = (i > 0) ? i : 0;
                             bestLen = x - y;
                             stillPal = false;
+                            bestString = line.substr(i, (bestLen-i));
                         }
                     }
                 }
             }
         }
     }
-    Result res = {0,0,0};
+    std::cout<< bestString << std::endl;
+    /*Result res = {0,0,0};
     res.lineNumber = lineNumber;
     res.firstChar = bestStart+1;//+1
-    res.length = bestLen-1;//-1
+    res.length = bestLen-1;//-1*/
     //std::cout << "\nres in func len, lineNum, start: "<< res.length<< " "<< res.lineNumber<< "  "<< res.firstChar<<std::endl;
-    return res;
+    return bestString;
 }
 
 
@@ -177,21 +183,42 @@ main(int argc, char* argv[])
     char recv_data[information.length())/numberOfProcesses];
     MPI_Scatter(send_data, information.length()/numberOfProcesses, MPI_Char, recv_data,
                 information.length()/numberOfProcesses, MPI_Char, 0, MPI_COMM_WORLD);
+    file.close();
 
     //Find the largest palindrome
     std::string x;
     std::string str(x, recv_data);
-    Result res = SearchFromCentre(x);
+    std::string res = SearchFromCentre(x);
     //if worldrank = 0 create an array to hold all Paindromes
+    std::string *gatherResults = NULL;
+    if (processId==0){
+        gatherResults[numberOfProcesses];
+    }
 
+    MPI_Gather(res,res.length(), MPI_Char, gatherResults,res.length(), MPI_Char, 0, MPI_COMM_WORLD);
     //Gather the processes
+    std::string bestString = "";
+    for (int i = 0; i < numberOfProcesses; i++){
+        if (gatherResults[i].length()>bestString.length()){
+            bestString = gatherResults[i];
+        }
+    }
 
     //if world rank = 0 find largest Palindrome
     // ... Eventually..
     if(processId == 0)
     {
-        Result result(0,0,0);
-        DoOutput(result);
+        std::ifstream searchfile(argv[1]);
+        std::string searchStr;
+        int lineCount = -1;
+        int firstChar = 0;
+        while (std::getline(searchfile, searchStr)){
+            lineCount++;
+            if (searchStr.find(bestString) != std::string::npos)
+                firstChar = searchStr.find(bestString);
+        }
+        Result finalResult = {lineCount, firstChar, bestString.length()};
+        DoOutput(finalResult);
     }
 
     MPI_Finalize();
