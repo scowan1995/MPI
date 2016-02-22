@@ -42,6 +42,7 @@ DoOutput(Result r)
 
 // CHANGE This Code (you can add more functions)-----------------------------------------------------------------------------
 std::string SearchFromCentre(std::string param){
+    std::cout<<"starting search"<<std::endl;
     std::string str = "";
     std::stringstream ss(param);
     std::string line;
@@ -121,7 +122,9 @@ std::string SearchFromCentre(std::string param){
             }
         }
     }
-    std::cout<< bestString << std::endl;
+    std::cout<<"finishing search"<<std::endl;
+    std::cout<<"pal"<< bestString << std::endl;
+
     /*Result res = {0,0,0};
     res.lineNumber = lineNumber;
     res.firstChar = bestStart+1;//+1
