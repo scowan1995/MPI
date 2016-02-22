@@ -183,7 +183,7 @@ main(int argc, char* argv[])
     std::string *send_data = &information;  //so here we basically have a 2d array of chars
     //Scatter the lines to each process in the world
     char recv_data[information.length()/numberOfProcesses];
-    MPI_Scatter(send_data, information.length()/numberOfProcesses, MPI_Char, recv_data,
+    MPI_Scatter(send_data, information.length()/numberOfProcesses, MPI_CHAR, recv_data,
                 information.length()/numberOfProcesses, MPI_Char, 0, MPI_COMM_WORLD);
     file.close();
 
@@ -196,7 +196,7 @@ main(int argc, char* argv[])
         gatherResults[numberOfProcesses];
     }
 
-    MPI_Gather(res,res.length(), MPI_Char, gatherResults,res.length(), MPI_Char, 0, MPI_COMM_WORLD);
+    MPI_Gather(res,res.length(), MPI_CHAR, gatherResults,res.length(), MPI_Char, 0, MPI_COMM_WORLD);
     //Gather the processes
     std::string bestString = "";
     for (int i = 0; i < numberOfProcesses; i++){
@@ -218,7 +218,10 @@ main(int argc, char* argv[])
             if (searchStr.find(bestString) != std::string::npos)
                 firstChar = searchStr.find(bestString);
         }
-        Result finalResult = {lineCount, firstChar, bestString.length()};
+        Result finalResult =  {0,0,0};
+        finalResult.lineNumber = lineCount;
+        finalResult.firstChar = firstChar;
+        finalResult.length = bestString.length();
         DoOutput(finalResult);
     }
 
