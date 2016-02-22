@@ -41,6 +41,34 @@ DoOutput(Result r)
 }
 
 // CHANGE This Code (you can add more functions)-----------------------------------------------------------------------------
+std::string longestPalindromeDP(std::string s) {
+    int n = s.length();
+    int longestBegin = 0;
+    int maxLen = 1;
+    bool table[1000][1000] = {false};
+    for (int i = 0; i < n; i++) {
+        table[i][i] = true;
+    }
+    for (int i = 0; i < n-1; i++) {
+        if (s[i] == s[i+1]) {
+            table[i][i+1] = true;
+            longestBegin = i;
+            maxLen = 2;
+        }
+    }
+    for (int len = 3; len <= n; len++) {
+        for (int i = 0; i < n-len+1; i++) {
+            int j = i+len-1;
+            if (s[i] == s[j] && table[i+1][j-1]) {
+                table[i][j] = true;
+                longestBegin = i;
+                maxLen = len;
+            }
+        }
+    }
+    return s.substr(longestBegin, maxLen);
+}
+
 std::string SearchFromCentre(std::string param){
     std::cout<<"starting search"<<std::endl;
     std::string str = "";
@@ -209,7 +237,7 @@ main(int argc, char* argv[])
 
     //Find the largest palindrome
   //  std::string x(&recv_data[0]);//, std::end(recv_data) - std::begin(recv_data)
-    std::string palindrome = SearchFromCentre(str);
+    std::string palindrome = longestPalindromeDP(str);
     std::cout<<"Here is the Palindrome: "<<palindrome<<std::endl;
     char *gather_data = (char *)malloc(sizeof(char) * palindrome.length()+1);  //so here we basically have a massive string
     palindrome.append("\n");
