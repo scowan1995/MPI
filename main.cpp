@@ -216,7 +216,7 @@ main(int argc, char* argv[])
             std::cout << "We made it!!  " << gatherResults[i] << std::endl;
         }
     }
-
+    std::cout<<"finished?"<<std::endl;
     //if world rank = 0 find largest Palindrome
     // ... Eventually..
   /*std::cout<<"made it 6"<<std::endl;
