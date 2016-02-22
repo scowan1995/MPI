@@ -196,7 +196,7 @@ main(int argc, char* argv[])
     //if worldrank = 0 create an array to hold all Paindromes
     std::string *gatherResults = NULL;
     if (processId==0){
-       gatherResults[numberOfProcesses];
+       gatherResults = (std::string *)malloc(sizeof(std::string) * numberOfProcesses);;
     }
 
     MPI_Gather(&res,1, MPI_CHAR, gatherResults,1, MPI_CHAR, 0, MPI_COMM_WORLD);
@@ -207,7 +207,7 @@ main(int argc, char* argv[])
             //if (gatherResults[i].length()>bestString.length()){
             //    bestString = gatherResults[i];
             //}
-            std::cout << "We made it!!  " << gatherResults << std::endl;
+            std::cout << "We made it!!  " << gatherResults[i] << std::endl;
         }
     }
 
