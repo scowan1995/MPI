@@ -55,13 +55,13 @@ int main(int argc, char** argv) {
 
     // For each process, create a buffer that will hold a subset of the entire
     // array
-    float *sub_rand_chars = (float *)malloc(sizeof(float) * num_elements_per_proc);
+    char *sub_rand_chars = (char *)malloc(sizeof(char) * num_elements_per_proc);
     assert(sub_rand_chars != NULL);
 
     // Scatter the random numbers from the root process to all processes in
     // the MPI world
-    MPI_Scatter(rand_nums, num_elements_per_proc, MPI_FLOAT, sub_rand_chars,
-                num_elements_per_proc, MPI_FLOAT, 0, MPI_COMM_WORLD);
+    MPI_Scatter(rand_nums, num_elements_per_proc, MPI_CHAR, sub_rand_chars,
+                num_elements_per_proc, MPI_CHAR, 0, MPI_COMM_WORLD);
 
     // Compute the average of your subset
     float sub_avg = remove_a(sub_rand_chars, num_elements_per_proc);
@@ -72,7 +72,7 @@ int main(int argc, char** argv) {
         sub_avgs = (float *)malloc(sizeof(float) * world_size);
         assert(sub_avgs != NULL);
     }
-    MPI_Gather(&sub_avg, 1, MPI_FLOAT, sub_avgs, 1, MPI_FLOAT, 0, MPI_COMM_WORLD);
+    MPI_Gather(&sub_avg, 1, MPI_CHAR, sub_avgs, 1, MPI_CHAR, 0, MPI_COMM_WORLD);
 
     // Now that we have all of the partial averages on the root, compute the
     // total average of all numbers. Since we are assuming each process computed
