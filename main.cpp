@@ -237,7 +237,7 @@ main(int argc, char* argv[])
 
     //Find the largest palindrome
   //  std::string x(&recv_data[0]);//, std::end(recv_data) - std::begin(recv_data)
-    std::string palindrome = longestPalindromeDP(str);
+    std::string palindrome = SearchFromCentre(str);
     std::cout<<"at ;east out"<<std::endl;
     std::cout<<"Here is the Palindrome: "<<palindrome<<std::endl;
     char *gather_data = (char *)malloc(sizeof(char) * palindrome.length()+1);  //so here we basically have a massive string
