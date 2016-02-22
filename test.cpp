@@ -64,15 +64,15 @@ int main(int argc, char** argv) {
                 num_elements_per_proc, MPI_CHAR, 0, MPI_COMM_WORLD);
 
     // Compute the average of your subset
-    float sub_avg = remove_a(sub_rand_chars, num_elements_per_proc);
+    int sub_avg = remove_a(sub_rand_chars, num_elements_per_proc);
 
     // Gather all partial averages down to the root process
-    float *sub_avgs = NULL;
+    int *sub_avgs = NULL;
     if (world_rank == 0) {
-        sub_avgs = (float *)malloc(sizeof(float) * world_size);
+        sub_avgs = (int *)malloc(sizeof(int) * world_size);
         assert(sub_avgs != NULL);
     }
-    MPI_Gather(&sub_avg, 1, MPI_CHAR, sub_avgs, 1, MPI_CHAR, 0, MPI_COMM_WORLD);
+    MPI_Gather(&sub_avg, 1, MPI_INT, sub_avgs, 1, MPI_INT, 0, MPI_COMM_WORLD);
 
     // Now that we have all of the partial averages on the root, compute the
     // total average of all numbers. Since we are assuming each process computed
