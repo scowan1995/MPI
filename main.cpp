@@ -185,9 +185,10 @@ main(int argc, char* argv[])
     std::string *send_data = &information;  //so here we basically have a massive string
     //Scatter the lines to each process in the world
     char recv_data[information.length()/numberOfProcesses];
+    file.close();
     MPI_Scatter(send_data, information.length()/numberOfProcesses, MPI_CHAR, &recv_data,
                 information.length()/numberOfProcesses, MPI_CHAR, 0, MPI_COMM_WORLD);
-    file.close();
+    std::cout<<"Made it 5.1"<<std::endl;
     std::cout<<"get me anything: "<<recv_data[0]<<std::endl;
     char res = recv_data[0];
     //Find the largest palindrome
