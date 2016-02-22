@@ -211,8 +211,6 @@ main(int argc, char* argv[])
     //Find the largest palindrome
   //  std::string x(&recv_data[0]);//, std::end(recv_data) - std::begin(recv_data)
     std::string palindrome = SearchFromCentre(str);
-    std::cout<<"at ;east out"<<std::endl;
-    std::cout<<"Here is the Palindrome: "<<palindrome<<std::endl;
     char *gather_data = (char *)malloc(sizeof(char) * palindrome.length()+1);  //so here we basically have a massive string
     palindrome.append(" ");
     strcpy(gather_data, palindrome.c_str());
@@ -224,17 +222,8 @@ main(int argc, char* argv[])
     }
 
     MPI_Gather(gather_data, palindrome.length(), MPI_CHAR, gatherResults, palindrome.length(), MPI_CHAR, 0, MPI_COMM_WORLD);
-    std::cout<<"gathered up"<<std::endl;
     //Gather the processes
     std::string bestString = "";
-    if (processId==0) {
-        for (int i = 0; i < numberOfProcesses; i++) {
-            //if (gatherResults[i].length()>bestString.length()){
-            //    bestString = gatherResults[i];
-            //}
-            std::cout << "We made it!!  " << gatherResults[i] << std::endl;
-        }
-    }
     std::string toStr(gather_data);
     std::stringstream allPals(toStr);
     std::string hold;
@@ -245,13 +234,8 @@ main(int argc, char* argv[])
             bestStr = hold;
         }
     }
-    std::cout<<"finished: "<<bestStr<<std::endl;
-    //if world rank = 0 find largest Palindrome
-    // ... Eventually..
-\
     if(processId == 0)
     {
-        std::cout<<"made it 7"<<std::endl;
         std::ifstream searchfile(argv[1]);
         std::string searchStr = bestStr;
         int lineCount = -1;
