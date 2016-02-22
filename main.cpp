@@ -203,7 +203,6 @@ main(int argc, char* argv[])
     MPI_Scatter(send_data, information.length()/numberOfProcesses, MPI_CHAR, recv_data,
                 information.length()/numberOfProcesses, MPI_CHAR, 0, MPI_COMM_WORLD);
     char res = recv_data[0];
-    std::cout<<std::endl;
     std::string str(recv_data);
   //  std::cout<<"block "<<str<<" block"<<std::endl;  //so this works and I can get a palindrome from it but how to gather
     //possibly just need to make a massive thing for holding strings
