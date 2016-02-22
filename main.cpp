@@ -183,9 +183,10 @@ main(int argc, char* argv[])
     //    chunks[i%numberOfProcesses].append(" "+line);  //the space is a delim used later
     }
     std::cout<<"made it 5"<<std::endl;
-    std::string *send_data = &information;  //so here we basically have a massive string
+    char *send_data = (char *)malloc(sizeof(char) * information.length());  //so here we basically have a massive string
+    strcpy(send_data, information.c_str());
     //Scatter the lines to each process in the world
-    char * recv_data = (char *)malloc(sizeof(char) * information.length()/numberOfProcesses-1);
+    char * recv_data = (char *)malloc(sizeof(char) * information.length()/numberOfProcesses);
     assert(recv_data != NULL);
     //file.close();
     MPI_Scatter(send_data, information.length()/numberOfProcesses-1, MPI_CHAR, recv_data,
