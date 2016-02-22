@@ -199,9 +199,9 @@ main(int argc, char* argv[])
   //  std::string x(&recv_data[0]);//, std::end(recv_data) - std::begin(recv_data)
    // std::string res = SearchFromCentre(x);
     //if worldrank = 0 create an array to hold all Paindromes
-    std::string *gatherResults = NULL;
+    char *gatherResults = NULL;
     if (processId==0){
-       gatherResults = (std::string *)malloc(sizeof(std::string) * numberOfProcesses);;
+       gatherResults = (char *)malloc(sizeof(char) * numberOfProcesses);;
     }
 
     MPI_Gather(&res,1, MPI_CHAR, gatherResults,1, MPI_CHAR, 0, MPI_COMM_WORLD);
