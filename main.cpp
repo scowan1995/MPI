@@ -196,7 +196,7 @@ main(int argc, char* argv[])
         gatherResults[numberOfProcesses];
     }
 
-    MPI_Gather(res,res.length(), MPI_CHAR, gatherResults,res.length(), MPI_CHAR, 0, MPI_COMM_WORLD);
+    MPI_Gather(res,res.length(), MPI_CHAR, gatherResults,1, MPI_CHAR, 0, MPI_COMM_WORLD);
     //Gather the processes
     std::string bestString = "";
     for (int i = 0; i < numberOfProcesses; i++){
