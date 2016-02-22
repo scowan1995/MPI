@@ -61,6 +61,7 @@ std::string SearchFromCentre(std::string param){
             bool stillPal = true;
             while ((i>=0&&j<line.length())&&stillPal)
             {
+                std::cout<<"increment: "<<i<<" "<<j<< "with line length "<<line.length()<<::endl;
                 if (line[i]==line[j])
                 {
                     i--;
