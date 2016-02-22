@@ -199,7 +199,7 @@ main(int argc, char* argv[])
     {
         std::cout<<recv_data[i];
     }
-    std::endl;
+    std::cout<<std::endl;
     //Find the largest palindrome
   //  std::string x(&recv_data[0]);//, std::end(recv_data) - std::begin(recv_data)
    // std::string res = SearchFromCentre(x);
