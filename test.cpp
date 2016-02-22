@@ -6,7 +6,7 @@
 
 // Creates an array of random numbers. Each number has a value from 0 - 1
 char *create_rand_chars(int num_elements) {
-    char *rand_nums = (float *)malloc(sizeof(float) * num_elements);
+    char *rand_nums = (char *)malloc(sizeof(char) * num_elements);
     assert(rand_nums != NULL);
     int i;
     for (i = 0; i < num_elements; i++) {
