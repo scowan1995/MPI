@@ -64,7 +64,7 @@ int main(int argc, char** argv) {
                 num_elements_per_proc, MPI_CHAR, 0, MPI_COMM_WORLD);
 
     // Compute the average of your subset
-    for (char &var : sub_rand_chars)
+    for (char var : sub_rand_chars)
     {
         std::cout<<var<<" ";
     }
