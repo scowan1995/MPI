@@ -258,13 +258,13 @@ main(int argc, char* argv[])
         int firstChar = 0;
         while (std::getline(searchfile, searchStr)){
             lineCount++;
-            if (searchStr.find(bestString) != std::string::npos)
+            if (searchStr.find(bestStr) != std::string::npos)
                 firstChar = searchStr.find(bestString);
         }
         Result finalResult =  {0,0,0};
         finalResult.lineNumber = lineCount;
         finalResult.firstChar = firstChar;
-        finalResult.length = bestString.length();
+        finalResult.length = bestStr.length();
         DoOutput(finalResult);
     }
 
