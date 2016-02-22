@@ -7,6 +7,7 @@
 #include <vector>
 #include <sstream>
 #include <iterator>
+#include <assert.h>
 
 // Don't CHANGE This Code (you can add more functions)-----------------------------------------------------------------------------
 
@@ -184,7 +185,8 @@ main(int argc, char* argv[])
     std::cout<<"made it 5"<<std::endl;
     std::string *send_data = &information;  //so here we basically have a massive string
     //Scatter the lines to each process in the world
-    char * recv_data = (char *)malloc(sizeof(char) * numberOfProcesses);
+    char * recv_data = (char *)malloc(sizeof(char) * information.length()/numberOfProcesses-1);
+    assert(recv_data != NULL);
     //file.close();
     MPI_Scatter(send_data, information.length()/numberOfProcesses-1, MPI_CHAR, recv_data,
                 information.length()/numberOfProcesses-1, MPI_CHAR, 0, MPI_COMM_WORLD);
