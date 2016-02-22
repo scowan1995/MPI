@@ -52,10 +52,10 @@ std::string SearchFromCentre(std::string param){
     std::string bestString = "";
     for (int lines = 0; std::getline(ss, line, '\n'); lines++)
     {
-        std::cout<<"loop line"<<std::endl;
+        std::cout<<"loop line "<<line<<std::endl;
         for(int centre= 0 ; centre < line.length(); centre++)
         {//pick a centre to expand from
-            std::cout<<"loop single"<<std::endl;
+            std::cout<<"looping through "<<line<<std::endl;
             int i = centre -1;
             int j = centre +1;
             bool stillPal = true;
