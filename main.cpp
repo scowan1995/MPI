@@ -135,12 +135,12 @@ main(int argc, char* argv[])
 {
     int processId;
     int numberOfProcesses;
-
+    std::cout<<"made it 1"<<std::endl;
     // Setup MPI
     MPI_Init( &argc, &argv );
     MPI_Comm_rank( MPI_COMM_WORLD, &processId);
     MPI_Comm_size( MPI_COMM_WORLD, &numberOfProcesses);
-
+    std::cout<<"made it 2"<<std::endl;
     // Two arguments, the program name and the input file. The second should be the input file
     if(argc != 2)
     {
@@ -151,7 +151,7 @@ main(int argc, char* argv[])
         MPI_Finalize();
         return 0;
     }
-
+    std::cout<<"made it 3"<<std::endl;
     // ....... Your SPMD program goes here ............
     // get all lines into an array if world rank = 0
     std::ifstream file(argv[1]);
@@ -161,6 +161,7 @@ main(int argc, char* argv[])
     //create buffer to hold a subset of the lines, one for each process
     //std::vector<std::string> chunks;
     //this should split up the input into numProcs chunks of roughly equal length
+    std::cout<<"made it 4"<<std::endl;
     std::string information = "";
     int lineCount = 0;
     for (int i = 0; i< numberOfProcesses; i++)
@@ -180,6 +181,7 @@ main(int argc, char* argv[])
             information.append(" "+line);
     //    chunks[i%numberOfProcesses].append(" "+line);  //the space is a delim used later
     }
+    std::cout<<"made it 5"<<std::endl;
     std::string *send_data = &information;  //so here we basically have a 2d array of chars
     //Scatter the lines to each process in the world
     char recv_data[information.length()/numberOfProcesses];
@@ -207,8 +209,10 @@ main(int argc, char* argv[])
 
     //if world rank = 0 find largest Palindrome
     // ... Eventually..
+    std::cout<<"made it 6"<<std::endl;
     if(processId == 0)
     {
+        std::cout<<"made it 7"<<std::endl;
         std::ifstream searchfile(argv[1]);
         std::string searchStr;
         int lineCount = -1;
