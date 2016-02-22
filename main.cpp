@@ -232,7 +232,7 @@ main(int argc, char* argv[])
     char res = recv_data[0];
     std::cout<<std::endl;
     std::string str(recv_data);
-    std::cout<<"|"<<str<<"|"<<std::endl;  //so this works and I can get a palindrome from it but how to gather
+    std::cout<<"block "<<str<<" block"<<std::endl;  //so this works and I can get a palindrome from it but how to gather
     //possibly just need to make a massive thing for holding strings
 
     //Find the largest palindrome
