@@ -41,36 +41,14 @@ DoOutput(Result r)
 }
 
 // CHANGE This Code (you can add more functions)-----------------------------------------------------------------------------
-std::string longestPalindromeDP(std::string s) {
-    int n = s.length();
-    int longestBegin = 0;
-    int maxLen = 1;
-    bool table[1000][1000] = {false};
-    for (int i = 0; i < n; i++) {
-        table[i][i] = true;
-    }
-    for (int i = 0; i < n-1; i++) {
-        if (s[i] == s[i+1]) {
-            table[i][i+1] = true;
-            longestBegin = i;
-            maxLen = 2;
-        }
-    }
-    for (int len = 3; len <= n; len++) {
-        for (int i = 0; i < n-len+1; i++) {
-            int j = i+len-1;
-            if (s[i] == s[j] && table[i+1][j-1]) {
-                table[i][j] = true;
-                longestBegin = i;
-                maxLen = len;
-            }
-        }
-    }
-    return s.substr(longestBegin, maxLen);
+string removeSpaces(string input)
+{
+    input.erase(std::remove(input.begin(),input.end(),' '),input.end());
+    return input;
 }
 
 std::string SearchFromCentre(std::string param){
-    std::cout<<"starting search"<<std::endl;
+
     std::string str = "";
     std::stringstream ss(param);
     std::string line;
@@ -78,21 +56,19 @@ std::string SearchFromCentre(std::string param){
     int bestStart = 0;
     int lineNumber = 0;
     std::string bestString = "";
-    std::cout<<"for start"<<std::endl;
+
     for (int lines = 0; std::getline(ss, line, '\n'); lines++)
     {
-        std::cout<<"loop line "<<line<<std::endl;
+
         for(int centre= 0 ; centre < line.length(); centre++)
         {//pick a centre to expand from
-            std::cout<<"looping through "<<line<<" i = "<<centre<<"centre = "<<line[centre]<<std::endl;
+
             int i = centre -1;
             int j = centre +1;
-            std::cout<<"sides left, right: "<< i<<" "<<j<<std::endl;
+
             bool stillPal = true;
             while (((i>=0)&&(j<line.length()))&&stillPal)
             {
-                std::cout<<"huh";
-                std::cout<<"Odd increment: "<<i<<" "<<j<< "with line length "<<line.length()<<std::endl;
                 if (line[i]==line[j])
                 {
                     i--;
@@ -160,8 +136,7 @@ std::string SearchFromCentre(std::string param){
             }
         }
     }
-    std::cout<<"finishing search"<<std::endl;
-    std::cout<<"pal"<< bestString << std::endl;
+
 
     /*Result res = {0,0,0};
     res.lineNumber = lineNumber;
@@ -177,12 +152,10 @@ main(int argc, char* argv[])
 {
     int processId;
     int numberOfProcesses;
-    std::cout<<"made it 1"<<std::endl;
     // Setup MPI
     MPI_Init( &argc, &argv );
     MPI_Comm_rank( MPI_COMM_WORLD, &processId);
     MPI_Comm_size( MPI_COMM_WORLD, &numberOfProcesses);
-    std::cout<<"made it 2"<<std::endl;
     // Two arguments, the program name and the input file. The second should be the input file
     if(argc != 2)
     {
@@ -193,7 +166,6 @@ main(int argc, char* argv[])
         MPI_Finalize();
         return 0;
     }
-    std::cout<<"made it 3"<<std::endl;
     // ....... Your SPMD program goes here ............
     // get all lines into an array if world rank = 0
     std::ifstream file(argv[1]);
@@ -203,7 +175,6 @@ main(int argc, char* argv[])
     //create buffer to hold a subset of the lines, one for each process
     //std::vector<std::string> chunks;
     //this should split up the input into numProcs chunks of roughly equal length
-    std::cout<<"made it 4"<<std::endl;
     std::string information = "";
     int lineCount = 0;
     for (int i = 0; i< numberOfProcesses; i++)
@@ -223,7 +194,6 @@ main(int argc, char* argv[])
             information.append("\n"+line);
     //    chunks[i%numberOfProcesses].append(" "+line);  //the space is a delim used later
     }
-    std::cout<<"made it 5"<<std::endl;
     char *send_data = (char *)malloc(sizeof(char) * information.length());  //so here we basically have a massive string
     strcpy(send_data, information.c_str());
     //Scatter the lines to each process in the world
@@ -232,9 +202,6 @@ main(int argc, char* argv[])
     //file.close();
     MPI_Scatter(send_data, information.length()/numberOfProcesses, MPI_CHAR, recv_data,
                 information.length()/numberOfProcesses, MPI_CHAR, 0, MPI_COMM_WORLD);
-    std::cout<<"Made it 5.1"<<std::endl;
-    std::cout<<"get me anything: "<<recv_data[0]<<std::endl;
-    std::cout<<"gotten the things"<<std::endl;
     char res = recv_data[0];
     std::cout<<std::endl;
     std::string str(recv_data);
@@ -247,7 +214,7 @@ main(int argc, char* argv[])
     std::cout<<"at ;east out"<<std::endl;
     std::cout<<"Here is the Palindrome: "<<palindrome<<std::endl;
     char *gather_data = (char *)malloc(sizeof(char) * palindrome.length()+1);  //so here we basically have a massive string
-    palindrome.append("\n");
+    palindrome.append(" ");
     strcpy(gather_data, palindrome.c_str());
     //if worldrank = 0 create an array to hold all Paindromes
     //creating a string to append each palinrome on to
@@ -268,15 +235,25 @@ main(int argc, char* argv[])
             std::cout << "We made it!!  " << gatherResults[i] << std::endl;
         }
     }
-    std::cout<<"finished?"<<std::endl;
+    std::string toStr(gather_data);
+    std::stringstream allPals(toStr);
+    std::string hold;
+    std::string bestStr = " ";
+    for (int i = 0; std::getline(allPals,hold, ' ' ); i++){
+        if (bestStr.length()<hold.length())
+        {
+            bestStr = hold;
+        }
+    }
+    std::cout<<"finished: "<<bestStr<<std::endl;
     //if world rank = 0 find largest Palindrome
     // ... Eventually..
-  /*std::cout<<"made it 6"<<std::endl;
+\
     if(processId == 0)
     {
         std::cout<<"made it 7"<<std::endl;
         std::ifstream searchfile(argv[1]);
-        std::string searchStr;
+        std::string searchStr = bestStr;
         int lineCount = -1;
         int firstChar = 0;
         while (std::getline(searchfile, searchStr)){
@@ -290,7 +267,7 @@ main(int argc, char* argv[])
         finalResult.length = bestString.length();
         DoOutput(finalResult);
     }
-    */
+
 
     MPI_Finalize();
 
