@@ -10,7 +10,7 @@ char *create_rand_chars(int num_elements) {
     assert(rand_nums != NULL);
     int i;
     for (i = 0; i < num_elements; i++) {
-        rand_nums[i] = "abcde"[rand()%5];
+        rand_nums[i] = "abcde"[rand()%11];
     }
     return rand_nums;
 }
@@ -64,6 +64,11 @@ int main(int argc, char** argv) {
                 num_elements_per_proc, MPI_CHAR, 0, MPI_COMM_WORLD);
 
     // Compute the average of your subset
+    for (char &var: sub_rand_chars)
+    {
+        std::cout<<var<<' ';
+    }
+    std::cout<<" endline"<<std::endl;
     int sub_avg = remove_a(sub_rand_chars, num_elements_per_proc);
 
     // Gather all partial averages down to the root process
