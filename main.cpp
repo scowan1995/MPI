@@ -205,6 +205,7 @@ main(int argc, char* argv[])
     }
 
     MPI_Gather(&res,1, MPI_CHAR, gatherResults,1, MPI_CHAR, 0, MPI_COMM_WORLD);
+    std::cout<<"gathered up"<<std::endl;
     //Gather the processes
     std::string bestString = "";
     if (processId==0) {
