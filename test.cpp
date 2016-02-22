@@ -60,7 +60,7 @@ int main(int argc, char** argv) {
 
     // Scatter the random numbers from the root process to all processes in
     // the MPI world
-    MPI_Scatter(rand_nums, num_elements_per_proc, MPI_CHAR, sub_rand_chars,
+    MPI_Scatter(rand_chars, num_elements_per_proc, MPI_CHAR, sub_rand_chars,
                 num_elements_per_proc, MPI_CHAR, 0, MPI_COMM_WORLD);
 
     // Compute the average of your subset
@@ -80,9 +80,9 @@ int main(int argc, char** argv) {
     // produce the correct answer.
     std::cout<< "got here 1"<<std::endl;
     if (world_rank == 0) {
-        for (int i = 0; i< sub_avgs.length(); i++)
+        for (int i = 0; i< sizeof(sub_avgs)/sizeof(sub_avgs[0]); i++)
         {
-            std<<cout<<" output:"<<sub_avgs[i]<<std::endl;
+            std::cout<<" output:"<<sub_avgs[i]<<std::endl;
         }
        // float avg = compute_avg(sub_avgs, world_size);
         //printf("Avg of all elements is %f\n", avg);
