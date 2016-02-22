@@ -193,6 +193,7 @@ main(int argc, char* argv[])
                 information.length()/numberOfProcesses-1, MPI_CHAR, 0, MPI_COMM_WORLD);
     std::cout<<"Made it 5.1"<<std::endl;
     std::cout<<"get me anything: "<<recv_data[0]<<std::endl;
+    std::cout<<"gotten the things"<<std::endl;
     char res = recv_data[0];
     //Find the largest palindrome
   //  std::string x(&recv_data[0]);//, std::end(recv_data) - std::begin(recv_data)
