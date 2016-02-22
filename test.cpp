@@ -75,6 +75,7 @@ int main(int argc, char** argv) {
     // total average of all numbers. Since we are assuming each process computed
     // an average across an equal amount of elements, this computation will
     // produce the correct answer.
+    std::cout<< "got here 1"<<std::endl;
     if (world_rank == 0) {
         float avg = compute_avg(sub_avgs, world_size);
         printf("Avg of all elements is %f\n", avg);
@@ -83,7 +84,7 @@ int main(int argc, char** argv) {
                 compute_avg(rand_nums, num_elements_per_proc * world_size);
         printf("Avg computed across original data is %f\n", original_data_avg);
     }
-
+    std::cout<< "got here 2"<<std::endl;
     // Clean up
     if (world_rank == 0) {
         free(rand_nums);
