@@ -80,7 +80,14 @@ int main(int argc, char** argv) {
         assert(sub_avgs != NULL);
     }
     MPI_Gather(&sub_avg, 1, MPI_INT, sub_avgs, 1, MPI_INT, 0, MPI_COMM_WORLD);
-
+    //ptr to thing you want to send back
+    //lenght of array of thing you want to send back
+    //data type of thing
+    //array where each process puts thing you want to send back
+    ////number of thing you want t send back
+    //datatype of array of things
+    //root
+    //comm
     // Now that we have all of the partial averages on the root, compute the
     // total average of all numbers. Since we are assuming each process computed
     // an average across an equal amount of elements, this computation will

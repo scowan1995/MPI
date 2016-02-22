@@ -182,34 +182,36 @@ main(int argc, char* argv[])
     //    chunks[i%numberOfProcesses].append(" "+line);  //the space is a delim used later
     }
     std::cout<<"made it 5"<<std::endl;
-    std::string *send_data = &information;  //so here we basically have a 2d array of chars
+    std::string *send_data = &information;  //so here we basically have a massive string
     //Scatter the lines to each process in the world
     char recv_data[information.length()/numberOfProcesses];
-    MPI_Scatter(send_data, information.length()/numberOfProcesses, MPI_CHAR, recv_data,
+    MPI_Scatter(send_data, information.length()/numberOfProcesses, MPI_CHAR, &recv_data,
                 information.length()/numberOfProcesses, MPI_CHAR, 0, MPI_COMM_WORLD);
     file.close();
-
+    std::cout<<"get me anything: "<<recv_data[0]<<std::endl;
+    char res = recv_data[0];
     //Find the largest palindrome
-    std::string x(&recv_data[0]);//, std::end(recv_data) - std::begin(recv_data)
-    std::string res = SearchFromCentre(x);
+  //  std::string x(&recv_data[0]);//, std::end(recv_data) - std::begin(recv_data)
+   // std::string res = SearchFromCentre(x);
     //if worldrank = 0 create an array to hold all Paindromes
     std::string *gatherResults = NULL;
     if (processId==0){
-        gatherResults[numberOfProcesses];
+       gatherResults[numberOfProcesses];
     }
 
-    MPI_Gather(&res,res.length(), MPI_CHAR, gatherResults,1, MPI_CHAR, 0, MPI_COMM_WORLD);
+    MPI_Gather(&res,1, MPI_CHAR, gatherResults,1, MPI_CHAR, 0, MPI_COMM_WORLD);
     //Gather the processes
     std::string bestString = "";
     for (int i = 0; i < numberOfProcesses; i++){
-        if (gatherResults[i].length()>bestString.length()){
-            bestString = gatherResults[i];
-        }
+        //if (gatherResults[i].length()>bestString.length()){
+        //    bestString = gatherResults[i];
+        //}
+        std::cout<<"We made it!!  "<<gatherResults<<std::endl;
     }
 
     //if world rank = 0 find largest Palindrome
     // ... Eventually..
-    std::cout<<"made it 6"<<std::endl;
+  /*std::cout<<"made it 6"<<std::endl;
     if(processId == 0)
     {
         std::cout<<"made it 7"<<std::endl;
@@ -228,6 +230,7 @@ main(int argc, char* argv[])
         finalResult.length = bestString.length();
         DoOutput(finalResult);
     }
+    */
 
     MPI_Finalize();
 
