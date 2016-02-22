@@ -5,24 +5,27 @@
 #include <assert.h>
 
 // Creates an array of random numbers. Each number has a value from 0 - 1
-float *create_rand_nums(int num_elements) {
-    float *rand_nums = (float *)malloc(sizeof(float) * num_elements);
+char *create_rand_chars(int num_elements) {
+    char *rand_nums = (float *)malloc(sizeof(float) * num_elements);
     assert(rand_nums != NULL);
     int i;
     for (i = 0; i < num_elements; i++) {
-        rand_nums[i] = (rand() / (float)RAND_MAX);
+        rand_nums[i] = "abcde"[((rand() / (float)RAND_MAX))%5];
     }
     return rand_nums;
 }
 
 // Computes the average of an array of numbers
-float compute_avg(float *array, int num_elements) {
+float remove_a(char *array, int num_elements) {
     float sum = 0.f;
     int i;
     for (i = 0; i < num_elements; i++) {
-        sum += array[i];
+        if (array[i]=='a'){
+            array[i] = 'z';
+            sum++;
+        }
     }
-    return sum / num_elements;
+    return sum;
 }
 
 int main(int argc, char** argv) {
@@ -45,23 +48,23 @@ int main(int argc, char** argv) {
     // Create a random array of elements on the root process. Its total
     // size will be the number of elements per process times the number
     // of processes
-    float *rand_nums = NULL;
+    char *rand_chars = NULL;
     if (world_rank == 0) {
-        rand_nums = create_rand_nums(num_elements_per_proc * world_size);
+        rand_chars = create_rand_chars(num_elements_per_proc * world_size);
     }
 
     // For each process, create a buffer that will hold a subset of the entire
     // array
-    float *sub_rand_nums = (float *)malloc(sizeof(float) * num_elements_per_proc);
-    assert(sub_rand_nums != NULL);
+    float *sub_rand_chars = (float *)malloc(sizeof(float) * num_elements_per_proc);
+    assert(sub_rand_chars != NULL);
 
     // Scatter the random numbers from the root process to all processes in
     // the MPI world
-    MPI_Scatter(rand_nums, num_elements_per_proc, MPI_FLOAT, sub_rand_nums,
+    MPI_Scatter(rand_nums, num_elements_per_proc, MPI_FLOAT, sub_rand_chars,
                 num_elements_per_proc, MPI_FLOAT, 0, MPI_COMM_WORLD);
 
     // Compute the average of your subset
-    float sub_avg = compute_avg(sub_rand_nums, num_elements_per_proc);
+    float sub_avg = remove_a(sub_rand_chars, num_elements_per_proc);
 
     // Gather all partial averages down to the root process
     float *sub_avgs = NULL;
@@ -77,12 +80,16 @@ int main(int argc, char** argv) {
     // produce the correct answer.
     std::cout<< "got here 1"<<std::endl;
     if (world_rank == 0) {
-        float avg = compute_avg(sub_avgs, world_size);
-        printf("Avg of all elements is %f\n", avg);
+        for (int i = 0; i< sub_avgs.length(); i++)
+        {
+            std<<cout<<" output:"<<sub_avgs[i]<<std::endl;
+        }
+       // float avg = compute_avg(sub_avgs, world_size);
+        //printf("Avg of all elements is %f\n", avg);
         // Compute the average across the original data for comparison
-        float original_data_avg =
-                compute_avg(rand_nums, num_elements_per_proc * world_size);
-        printf("Avg computed across original data is %f\n", original_data_avg);
+        //float original_data_avg =
+        //        compute_avg(rand_nums, num_elements_per_proc * world_size);
+       // printf("Avg computed across original data is %f\n", original_data_avg);
     }
     std::cout<< "got here 2"<<std::endl;
     // Clean up
@@ -90,7 +97,7 @@ int main(int argc, char** argv) {
         free(rand_nums);
         free(sub_avgs);
     }
-    free(sub_rand_nums);
+    free(sub_rand_chars);
 
     MPI_Barrier(MPI_COMM_WORLD);
     MPI_Finalize();
