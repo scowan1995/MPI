@@ -41,7 +41,7 @@ DoOutput(Result r)
 }
 
 // CHANGE This Code (you can add more functions)-----------------------------------------------------------------------------
-string removeSpaces(string input)
+std::string removeSpaces(std::string input)
 {
     input.erase(std::remove(input.begin(),input.end(),' '),input.end());
     return input;
