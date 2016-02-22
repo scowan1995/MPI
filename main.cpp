@@ -184,11 +184,11 @@ main(int argc, char* argv[])
     //Scatter the lines to each process in the world
     char recv_data[information.length()/numberOfProcesses];
     MPI_Scatter(send_data, information.length()/numberOfProcesses, MPI_CHAR, recv_data,
-                information.length()/numberOfProcesses, MPI_Char, 0, MPI_COMM_WORLD);
+                information.length()/numberOfProcesses, MPI_CHAR, 0, MPI_COMM_WORLD);
     file.close();
 
     //Find the largest palindrome
-    std::string x(&recv_data[0], std::end(recv_data) - std::begin(recv_data));
+    std::string x(&recv_data[0]);//, std::end(recv_data) - std::begin(recv_data)
     std::string res = SearchFromCentre(x);
     //if worldrank = 0 create an array to hold all Paindromes
     std::string *gatherResults = NULL;
