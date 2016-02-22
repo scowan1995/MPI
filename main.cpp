@@ -41,7 +41,7 @@ DoOutput(Result r)
 }
 
 // CHANGE This Code (you can add more functions)-----------------------------------------------------------------------------
-std::string SearchFromCentre(std::string &param){
+std::string SearchFromCentre(std::string param){
     std::string str = "";
     std::stringstream ss(param);
     std::string line;
