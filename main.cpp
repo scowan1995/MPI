@@ -195,6 +195,11 @@ main(int argc, char* argv[])
     std::cout<<"get me anything: "<<recv_data[0]<<std::endl;
     std::cout<<"gotten the things"<<std::endl;
     char res = recv_data[0];
+    for (int i = 0; i<information.length()/numberOfProcesses; i++)
+    {
+        std::cout<<recv_data[i];
+    }
+    std::endl;
     //Find the largest palindrome
   //  std::string x(&recv_data[0]);//, std::end(recv_data) - std::begin(recv_data)
    // std::string res = SearchFromCentre(x);
@@ -209,7 +214,7 @@ main(int argc, char* argv[])
     //Gather the processes
     std::string bestString = "";
     if (processId==0) {
-        for (int i = 0; i < numberOfProcesses; i++) {
+        for (int i = 0; i < numberOfProcesses+1; i++) {
             //if (gatherResults[i].length()>bestString.length()){
             //    bestString = gatherResults[i];
             //}
