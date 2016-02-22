@@ -171,7 +171,7 @@ main(int argc, char* argv[])
         std::getline(file, line);
         if (line.length()<1) lineCount--;
         else
-         information.append(" "+line);
+         information.append("\n"+line);
       //  chunks.push_back(line);
     }
     for (int i = 0; std::getline(file, line); i++)
@@ -179,7 +179,7 @@ main(int argc, char* argv[])
         lineCount++;
         if (line.length()<1) lineCount--;
         else
-            information.append(" "+line);
+            information.append("\n"+line);
     //    chunks[i%numberOfProcesses].append(" "+line);  //the space is a delim used later
     }
     std::cout<<"made it 5"<<std::endl;
@@ -195,23 +195,25 @@ main(int argc, char* argv[])
     std::cout<<"get me anything: "<<recv_data[0]<<std::endl;
     std::cout<<"gotten the things"<<std::endl;
     char res = recv_data[0];
-    for (int i = 0; i<information.length()/numberOfProcesses; i++)
-    {
-        std::cout<<recv_data[i];
-    }
     std::cout<<std::endl;
     std::string str(recv_data);
-    std::cout<<str<<std::endl;
+    std::cout<<str<<std::endl;  //so this works and I can get a palindrome from it but how to gather
+    //possibly just need to make a massive thing for holding strings
+
     //Find the largest palindrome
   //  std::string x(&recv_data[0]);//, std::end(recv_data) - std::begin(recv_data)
-   // std::string res = SearchFromCentre(x);
+    std::string palindrome = SearchFromCentre(str);
+    char *gather_data = (char *)malloc(sizeof(char) * palindrome.length()+1);  //so here we basically have a massive string
+    palindrome.append("\n");
+    strcpy(gather_data, palindrome.c_str());
     //if worldrank = 0 create an array to hold all Paindromes
+    //creating a string to append each palinrome on to
     char *gatherResults = NULL;
     if (processId==0){
-       gatherResults = (char *)malloc(sizeof(char) * numberOfProcesses);;
+        gatherResults=(char *)malloc(sizeof(char) * numberOfProcesses*1024); //made really big to hold large palindromes, not an elegant solution
     }
 
-    MPI_Gather(&res,1, MPI_CHAR, gatherResults,1, MPI_CHAR, 0, MPI_COMM_WORLD);
+    MPI_Gather(gather_data, palindrome.length(), MPI_CHAR, gatherResults, palindrome.length(), MPI_CHAR, 0, MPI_COMM_WORLD);
     std::cout<<"gathered up"<<std::endl;
     //Gather the processes
     std::string bestString = "";
