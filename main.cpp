@@ -88,7 +88,7 @@ std::string SearchFromCentre(std::string param){
             int i = centre -1;
             int j = centre +1;
             std::cout<<"sides left, right: "<< i<<" "<<j<<std::endl;
-            bool stillPal = true;
+            bool stillPal = false;
             while (((i>=0)&&(j<line.length()))&&stillPal)
             {
                 std::cout<<"huh";
@@ -97,6 +97,7 @@ std::string SearchFromCentre(std::string param){
                 {
                     i--;
                     j++;
+                    stillPal = true;
                 }
                 else if (j-i>bestLen)
                 {
@@ -132,6 +133,7 @@ std::string SearchFromCentre(std::string param){
                         if (line[i] == line[j]) {
                             i--;
                             j++;
+                            stillPal = true;
                         }
                         else if (j - i > bestLen) {
                             lineNumber = lines;
