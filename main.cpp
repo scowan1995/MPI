@@ -50,6 +50,7 @@ std::string SearchFromCentre(std::string param){
     int bestStart = 0;
     int lineNumber = 0;
     std::string bestString = "";
+    std::cout<<"for start"<<std::endl;
     for (int lines = 0; std::getline(ss, line, '\n'); lines++)
     {
         std::cout<<"loop line "<<line<<std::endl;
