@@ -226,8 +226,8 @@ main(int argc, char* argv[])
     char * recv_data = (char *)malloc(sizeof(char) * information.length()/numberOfProcesses);
     assert(recv_data != NULL);
     //file.close();
-    MPI_Scatter(send_data, information.length()/numberOfProcesses-1, MPI_CHAR, recv_data,
-                information.length()/numberOfProcesses-1, MPI_CHAR, 0, MPI_COMM_WORLD);
+    MPI_Scatter(send_data, information.length()/numberOfProcesses, MPI_CHAR, recv_data,
+                information.length()/numberOfProcesses, MPI_CHAR, 0, MPI_COMM_WORLD);
     std::cout<<"Made it 5.1"<<std::endl;
     std::cout<<"get me anything: "<<recv_data[0]<<std::endl;
     std::cout<<"gotten the things"<<std::endl;
