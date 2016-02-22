@@ -50,7 +50,7 @@ int main(int argc, char** argv) {
     // of processes
     char *rand_chars = NULL;
     if (world_rank == 0) {
-        rand_chars = std::string::copy("absjnaenfanfalnflanfna");
+        rand_chars = (char *)"absjnaenfanfalnflanfna";
        // rand_chars = create_rand_chars(num_elements_per_proc * world_size);
     }
 
