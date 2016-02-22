@@ -90,7 +90,7 @@ std::string SearchFromCentre(std::string param){
             bool stillPal = true;
             while ((i>=0&&j<line.length())&&stillPal)
             {
-                std::cout<<"increment: "<<i<<" "<<j<< "with line length "<<line.length()<<std::endl;
+                std::cout<<"Odd increment: "<<i<<" "<<j<< "with line length "<<line.length()<<std::endl;
                 if (line[i]==line[j])
                 {
                     i--;
@@ -125,6 +125,7 @@ std::string SearchFromCentre(std::string param){
                     j = centre + 2;
                     stillPal = true;
                     while (i >= 0 && j < line.length() && stillPal) {
+                        std::cout<<"Even increment: "<<i<<" "<<j<< "with line length "<<line.length()<<std::endl;
                         if (line[i] == line[j]) {
                             i--;
                             j++;
