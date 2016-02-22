@@ -16,7 +16,7 @@ char *create_rand_chars(int num_elements) {
 }
 
 // Computes the average of an array of numbers
-int remove_a(char *array, int num_elements) {
+char* remove_a(char *array, int num_elements) {
     int sum = 0;
     int i;
     for (i = 0; i < num_elements; i++) {
