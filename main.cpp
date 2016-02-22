@@ -184,9 +184,9 @@ main(int argc, char* argv[])
     std::cout<<"made it 5"<<std::endl;
     std::string *send_data = &information;  //so here we basically have a massive string
     //Scatter the lines to each process in the world
-    char recv_data[information.length()/numberOfProcesses];
-    file.close();
-    MPI_Scatter(send_data, information.length()/numberOfProcesses-1, MPI_CHAR, &recv_data,
+    char * recv_data = (char *)malloc(sizeof(char) * numberOfProcesses);
+    //file.close();
+    MPI_Scatter(send_data, information.length()/numberOfProcesses-1, MPI_CHAR, recv_data,
                 information.length()/numberOfProcesses-1, MPI_CHAR, 0, MPI_COMM_WORLD);
     std::cout<<"Made it 5.1"<<std::endl;
     std::cout<<"get me anything: "<<recv_data[0]<<std::endl;
