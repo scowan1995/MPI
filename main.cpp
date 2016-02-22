@@ -89,7 +89,7 @@ std::string SearchFromCentre(std::string param){
             int j = centre +1;
             std::cout<<"sides left, right: "<< i<<" "<<j<<std::endl;
             bool stillPal = true;
-            while ((i>=0&&j<line.length())&&stillPal)
+            while (((i>=0)&&(j<line.length()))&&stillPal)
             {
                 std::cout<<"huh";
                 std::cout<<"Odd increment: "<<i<<" "<<j<< "with line length "<<line.length()<<std::endl;
@@ -121,7 +121,7 @@ std::string SearchFromCentre(std::string param){
                 }
             }
             //Searchs for an even length palindrome
-            if ((centre< line.length()-1)&&(centre>=0)){
+            if ((centre < line.length()-1)&&(centre>=0)){
                 std::cout<<"just 1"<<std::endl;
                 if (line[centre]==line[centre+1]) {
                     i = centre - 1;
