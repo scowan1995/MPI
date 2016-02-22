@@ -120,6 +120,7 @@ std::string SearchFromCentre(std::string param){
             }
             //Searchs for an even length palindrome
             if ((centre< line.length()-1)&&(centre>=0)){
+                std::cout<<"just 1"<<std::endl;
                 if (line[centre]==line[centre+1]) {
                     i = centre - 1;
                     j = centre + 2;
