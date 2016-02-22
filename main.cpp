@@ -55,7 +55,7 @@ std::string SearchFromCentre(std::string param){
         std::cout<<"loop line "<<line<<std::endl;
         for(int centre= 0 ; centre < line.length(); centre++)
         {//pick a centre to expand from
-            std::cout<<"looping through "<<line<<std::endl;
+            std::cout<<"looping through "<<line<<" i = "<<centre<<std::endl;
             int i = centre -1;
             int j = centre +1;
             bool stillPal = true;
