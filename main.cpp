@@ -186,8 +186,8 @@ main(int argc, char* argv[])
     //Scatter the lines to each process in the world
     char recv_data[information.length()/numberOfProcesses];
     file.close();
-    MPI_Scatter(send_data, information.length()/numberOfProcesses, MPI_CHAR, &recv_data,
-                information.length()/numberOfProcesses, MPI_CHAR, 0, MPI_COMM_WORLD);
+    MPI_Scatter(send_data, information.length()/numberOfProcesses-1, MPI_CHAR, &recv_data,
+                information.length()/numberOfProcesses-1, MPI_CHAR, 0, MPI_COMM_WORLD);
     std::cout<<"Made it 5.1"<<std::endl;
     std::cout<<"get me anything: "<<recv_data[0]<<std::endl;
     char res = recv_data[0];
