@@ -10,7 +10,7 @@ char *create_rand_chars(int num_elements) {
     assert(rand_nums != NULL);
     int i;
     for (i = 0; i < num_elements; i++) {
-        rand_nums[i] = "abcde"[rand()%11];
+        rand_nums[i] = "abcde"[rand()%5];
     }
     return rand_nums;
 }
@@ -25,7 +25,7 @@ int remove_a(char *array, int num_elements) {
             sum++;
         }
     }
-    return sum;
+    return array;
 }
 
 int main(int argc, char** argv) {
@@ -50,7 +50,8 @@ int main(int argc, char** argv) {
     // of processes
     char *rand_chars = NULL;
     if (world_rank == 0) {
-        rand_chars = create_rand_chars(num_elements_per_proc * world_size);
+        rand_chars = "absjnaenfanfalnflanfna";
+       // rand_chars = create_rand_chars(num_elements_per_proc * world_size);
     }
 
     // For each process, create a buffer that will hold a subset of the entire
@@ -69,7 +70,7 @@ int main(int argc, char** argv) {
         std::cout<<sub_rand_chars[i]<<" ";
     }
     std::cout<<" endline"<<std::endl;
-    int sub_avg = remove_a(sub_rand_chars, num_elements_per_proc);
+    char* sub_avg = remove_a(sub_rand_chars, num_elements_per_proc);
 
     // Gather all partial averages down to the root process
     int *sub_avgs = NULL;
