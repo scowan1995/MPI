@@ -88,7 +88,7 @@ std::string SearchFromCentre(std::string param){
             int i = centre -1;
             int j = centre +1;
             std::cout<<"sides left, right: "<< i<<" "<<j<<std::endl;
-            bool stillPal = false;
+            bool stillPal = true;
             while (((i>=0)&&(j<line.length()))&&stillPal)
             {
                 std::cout<<"huh";
@@ -117,19 +117,19 @@ std::string SearchFromCentre(std::string param){
                     lineNumber = lines;
                     bestStart = (i > 0) ? i : 0;
                     bestLen = (j < line.length()) ? j - i : line.length() - i;
-                    bestString = line.substr(i, (bestLen-i));
+                    bestString = line.substr(y, (bestLen-y));
                     stillPal = false;
                 }
             }
             //Searchs for an even length palindrome
             if ((centre < line.length()-1)&&(centre>=0)){
-                std::cout<<"just 1"<<std::endl;
+                //std::cout<<"just 1"<<std::endl;
                 if (line[centre]==line[centre+1]) {
                     i = centre - 1;
                     j = centre + 2;
                     stillPal = true;
                     while (i >= 0 && j < line.length() && stillPal) {
-                        std::cout<<"Even increment: "<<i<<" "<<j<< "with line length "<<line.length()<<std::endl;
+                       // std::cout<<"Even increment: "<<i<<" "<<j<< "with line length "<<line.length()<<std::endl;
                         if (line[i] == line[j]) {
                             i--;
                             j++;
@@ -153,7 +153,7 @@ std::string SearchFromCentre(std::string param){
                             bestStart = (i > 0) ? i : 0;
                             bestLen = x - y;
                             stillPal = false;
-                            bestString = line.substr(i, (bestLen-i));
+                            bestString = line.substr(y, (bestLen-y));
                         }
                     }
                 }
