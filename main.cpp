@@ -6,6 +6,7 @@
 #include <iostream>
 #include <vector>
 #include <sstream>
+#include <iterator>
 
 // Don't CHANGE This Code (you can add more functions)-----------------------------------------------------------------------------
 
@@ -166,28 +167,28 @@ main(int argc, char* argv[])
     {
         lineCount++;
         std::getline(file, line);
-        information.append(" "+line);
+        if (line.length()<1) lineCount--;
+        else
+         information.append(" "+line);
       //  chunks.push_back(line);
     }
     for (int i = 0; std::getline(file, line); i++)
     {
         lineCount++;
-        information.append(" "+line);
+        if (line.length()<1) lineCount--;
+        else
+            information.append(" "+line);
     //    chunks[i%numberOfProcesses].append(" "+line);  //the space is a delim used later
     }
-
-
-
     std::string *send_data = &information;  //so here we basically have a 2d array of chars
     //Scatter the lines to each process in the world
-    char recv_data[information.length())/numberOfProcesses];
+    char recv_data[information.length()/numberOfProcesses];
     MPI_Scatter(send_data, information.length()/numberOfProcesses, MPI_Char, recv_data,
                 information.length()/numberOfProcesses, MPI_Char, 0, MPI_COMM_WORLD);
     file.close();
 
     //Find the largest palindrome
-    std::string x;
-    std::string str(x, recv_data);
+    std::string x(&recv_data[0], std::end(recv_data) - std::begin(recv_data));
     std::string res = SearchFromCentre(x);
     //if worldrank = 0 create an array to hold all Paindromes
     std::string *gatherResults = NULL;
