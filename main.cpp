@@ -202,11 +202,13 @@ main(int argc, char* argv[])
     MPI_Gather(&res,1, MPI_CHAR, gatherResults,1, MPI_CHAR, 0, MPI_COMM_WORLD);
     //Gather the processes
     std::string bestString = "";
-    for (int i = 0; i < numberOfProcesses; i++){
-        //if (gatherResults[i].length()>bestString.length()){
-        //    bestString = gatherResults[i];
-        //}
-        std::cout<<"We made it!!  "<<gatherResults<<std::endl;
+    if (processId==0) {
+        for (int i = 0; i < numberOfProcesses; i++) {
+            //if (gatherResults[i].length()>bestString.length()){
+            //    bestString = gatherResults[i];
+            //}
+            std::cout << "We made it!!  " << gatherResults << std::endl;
+        }
     }
 
     //if world rank = 0 find largest Palindrome
