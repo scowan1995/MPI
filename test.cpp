@@ -10,7 +10,7 @@ char *create_rand_chars(int num_elements) {
     assert(rand_nums != NULL);
     int i;
     for (i = 0; i < num_elements; i++) {
-        rand_nums[i] = "abcde"[((rand() / (float)RAND_MAX))%5];
+        rand_nums[i] = "abcde"[rand()%5];
     }
     return rand_nums;
 }
@@ -94,7 +94,7 @@ int main(int argc, char** argv) {
     std::cout<< "got here 2"<<std::endl;
     // Clean up
     if (world_rank == 0) {
-        free(rand_nums);
+        free(rand_chars);
         free(sub_avgs);
     }
     free(sub_rand_chars);
