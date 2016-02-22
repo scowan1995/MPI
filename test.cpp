@@ -30,7 +30,7 @@ int main(int argc, char** argv) {
         fprintf(stderr, "Usage: avg num_elements_per_proc\n");
         exit(1);
     }
-
+    std::cout<<"t least here 0"<<std::endl;
     int num_elements_per_proc = atoi(argv[1]);
     // Seed the random number generator to get different results each time
     srand(time(NULL));
