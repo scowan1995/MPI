@@ -218,7 +218,7 @@ main(int argc, char* argv[])
     //Gather the processes
     std::string bestString = "";
     if (processId==0) {
-        for (int i = 0; i < numberOfProcesses+1; i++) {
+        for (int i = 0; i < numberOfProcesses; i++) {
             //if (gatherResults[i].length()>bestString.length()){
             //    bestString = gatherResults[i];
             //}
